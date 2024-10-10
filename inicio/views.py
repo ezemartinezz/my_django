@@ -3,12 +3,14 @@ from django.http import HttpResponse
 from django.template import Template, Context, loader
 from datetime import datetime
 from django.shortcuts import render
+from inicio.models import Auto
 
 def mi_vista(request):
     return HttpResponse('Soy la vista')
 
 def inicio(request):
-    return HttpResponse('<h1> Soy la pantalla de INICIO </h1>')
+    # return HttpResponse('<h1> Soy la pantalla de INICIO </h1>')
+    return render(request, 'index.html') 
 
 def vista_datos1(request, nombre): 
      
@@ -39,6 +41,7 @@ def  segundo_template(request):
     #     template = Template(archivo_template.read())
     # contexto = Context(datos)
     # render_template = template.render(contexto)
+    # return HttpResponse(render_template)
     
     
     #       Version 2
@@ -52,3 +55,9 @@ def  segundo_template(request):
     #       Version 3
     
     return render(request, 'template2.html', datos)
+
+def crear_auto(request, marca, modelo, año):
+    
+    auto = Auto(marca =  marca, modelo = modelo, año = año)
+    auto.save()
+    return render(request, 'crear_auto_correcto.html', {'auto' : auto })
